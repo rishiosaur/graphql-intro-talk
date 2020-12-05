@@ -3,9 +3,70 @@ import {
   CodeSurferColumns,
   Step,
 } from "code-surfer";
-import { github, vsDark } from "@code-surfer/themes";
+import { github } from "@code-surfer/themes";
 
-export const theme = vsDark;
+export const theme = {
+  fonts: {
+    body: '"Inter", system-ui, sans-serif',
+    heading: '"Inter", sans-serif',
+    monospace: "Fira Code,Jetbrains Mono, monospace",
+  },
+  colors: {
+    text: "#FFF",
+    background: "#000",
+    primary: "#e3116c",
+  },
+  styles: {
+    CodeSurfer: {
+      tokens: {
+        "comment prolog doctype cdata": {
+          color: "#999988",
+          fontStyle: "italic",
+        },
+        namespace: {
+          opacity: 0.7,
+        },
+        "string attr-value": {
+          color: "#e3116c",
+        },
+        "punctuation operator": {
+          color: "#FFF",
+        },
+        "entity url symbol number boolean variable constant property regex inserted": {
+          color: "#36acaa",
+        },
+        "atrule keyword attr-name selector": {
+          color: "#00a4db",
+        },
+        "function deleted tag": {
+          color: "#d73a49",
+        },
+        "function-variable": {
+          color: "#6f42c1",
+        },
+        "tag selector": {
+          color: "#00009f",
+        },
+      },
+      title: {
+        backgroundColor: "#000",
+        color: "#FFF",
+      },
+      subtitle: {
+        color: "#000",
+        backgroundColor: "#fff",
+      },
+      pre: {
+        color: "#FFF",
+        backgroundColor: "#000",
+      },
+      code: {
+        color: "#FFF",
+        backgroundColor: "#000",
+      },
+    },
+  },
+};
 
 # Hello 👋
 
@@ -13,7 +74,7 @@ You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](h
 
 ---
 
-<CodeSurfer>
+<CodeSurfer theme={theme}>
 
 ```js title="This is a title" subtitle="and this a subtitle"
 function lorem(ipsum, dolor = 1) {
@@ -98,16 +159,35 @@ function incididunt(ipsum, ut = 1) {
 
 ---
 
-<CodeSurferColumns themes={[vsDark, github]}>
+<CodeSurferColumns themes={[theme, github]}>
 
 <Step>
 
 ```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+fetch(`https://api.spacex.land/rest/capsules-upcoming`)
+  .then((resp) => resp.json())
+  .then(console.log);
 ```
 
 ```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+const fetchSpaceX = fetch(
+  `https://api.spacex.land/graphql`,
+  {
+    body: JSON.stringify({
+      query: `
+        {
+  capsulesUpcoming {
+    status
+    id
+    type
+  }
+}
+      `,
+    }),
+  }
+)
+  .then((resp) => resp.json())
+  .then(console.log);
 ```
 
 </Step>
@@ -115,31 +195,48 @@ const minim = (ad, enim) => dolore.magna(ad / enim);
 <Step>
 
 ```js
-const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
-  return consectetur.adipiscing(
-    {
-      elit: sed.eiusmod(sit - dolor) / amet + 2,
-    },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
-};
+const urls = ["capsules-upcoming", "capsules", "cores"];
 
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+Promise.all(
+  urls.map((id) =>
+    fetch(
+      `https://api.spacex.land/rest/${id}`
+    ).then((resp) => resp.json())
+  )
+).then(console.log);
 ```
 
 ```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+const fetchSpaceX = fetch(
+  `https://api.spacex.land/graphql`,
+  {
+    body: JSON.stringify({
+      query: `
+        {
+  capsulesUpcoming {
+    status
+    id
+    type
+  }
 
-const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
-  return labore.et(
-    {
-      amet: dolore.magna(incididunt - tempor) / ut + 2,
-    },
-    (aliqua, elit) => eiusmod + ut * elit
-  );
-};
+  capsules {
+    status
+    id
+    type
+  }
+
+  cores {
+    status
+    id
+    types
+  }
+}
+      `,
+    }),
+  }
+)
+  .then((resp) => resp.json())
+  .then(console.log);
 ```
 
 </Step>
