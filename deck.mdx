@@ -4,6 +4,8 @@ import {
   Step,
 } from "code-surfer";
 import { github } from "@code-surfer/themes";
+import Code from 'mdx-code';
+import { Notesx } from 'mdx-deck';
 
 export const theme = {
   fonts: {
@@ -70,7 +72,11 @@ export const theme = {
 
 # Hello 👋
 
-You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesurfer.pomb.us)
+Intro to *GraphQL*
+
+<Notes>
+  Hello!
+</Notes>
 
 ---
 
@@ -245,5 +251,37 @@ const fetchSpaceX = fetch(
 
 ---
 
-docs:  
-[codesurfer.pomb.us](https://codesurfer.pomb.us)
+
+<Code>
+
+```js
+require("isomorphic-unfetch")(
+  `https://api.spacex.land/graphql`,
+  {
+      method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `
+        {
+  capsulesUpcoming {
+    status
+    id
+    type
+  }
+
+  capsules {
+    status
+    id
+    type
+  }
+
+}
+      `,
+    }),
+  }
+)
+  .then((resp) => resp.json())
+  .then(console.log);
+```
+
+</Code>
