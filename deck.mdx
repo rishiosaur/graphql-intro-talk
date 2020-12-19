@@ -205,57 +205,139 @@ export const socials = {
 
 </CodeSurfer>
 
-  return aliqua;
+---
+
+<Highlight>
+  <h1>Timeline</h1>
+</Highlight>
+
+---
+
+## Introduction [15 minutes]
+
+- What is GraphQL?
+
+- You as a 5-year-old.
+
+- Why use it?
+
+---
+
+## Using the GraphQL SDL [30 minutes]
+
+- General Format
+- Queries & Mutations
+- Typing
+
+- Introspection & what APIs look like
+
+---
+
+## Building our API [30 - 45ish minutes]
+
+- Introduction to TypegraphQL & Apollo
+- Building Queries
+- Building Mutations
+
+- Putting it all together
+
+---
+
+## Introduction
+
+<Highlight>
+  <h1>
+    What <i>is</i> GraphQL?
+  </h1>
+</Highlight>
+
+---
+
+# A new paradigm for data fetching.
+
+- The better REST
+- Define what data you want to grab from the API
+- Have type-safe guarantees for your data
+- High-level constructs
+
+---
+
+# GraphQL SDL (Schema Design Language)
+
+# Server Specification
+
+---
+
+# SDL
+
+- GraphQL Language
+- Queries, Mutations, and everything in between with
+- Defines types for an API, and all the possible things you can do with it
+
+---
+
+<CodeSurfer theme={theme}>
+
+```graphql title="Describe your data"
+type Todo {
+  id: ID
+  title: String
+  completed: Boolean
+  user: User
+}
+
+type TodosPage {
+  data: [Todo]
+  links: PaginationLinks
+  meta: PageMetadata
+}
+
+type Query {
+  todos(options: PageQueryOptions): TodosPage
+  todo(id: ID!): Todo
 }
 ```
 
-```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
-
-function adipiscing(...elit) {
-  if (!elit.sit) {
-    return [];
+```graphql title="Ask for what you need"
+query Query {
+  todos {
+    data {
+      id
+      title
+    }
   }
-
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
 }
-
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
-```
-
-```diff 1[10:14],2[15:19],3[22:27],10:12
-
 ```
 
 </CodeSurfer>
+
+---
+
+# Queries vs Mutations
+
+- Equivalent of REST request types
+
+- `Query` = GET request
+
+- `Mutation` = POST request
+
+---
+
+# Server Specification
+
+- A specification made by the GQL consortium to serve up GraphQL APIs
+- What you implement to make a GraphQL
+- Defines how GraphQL is parsed & queries resolved
+
+---
+
+# You as a 5-year-old
+
+`<Toy analogy/>`
+
+---
+
+# Why use GraphQL?
 
 ---
 
@@ -349,15 +431,14 @@ const fetchSpaceX = fetch(
 
 ---
 
-
 <Code>
 
 ```js
 require("isomorphic-unfetch")(
   `https://api.spacex.land/graphql`,
   {
-      method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: `
         {
