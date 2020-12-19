@@ -383,3 +383,270 @@ require("isomorphic-unfetch")(
 ```
 
 </Code>
+
+---
+
+## Using the GraphQL SDL
+
+<Highlight>
+  <h1>Introspection</h1>
+</Highlight>
+
+---
+
+# g.rishi.cx
+
+---
+
+# What do you want?
+
+- GraphQL's value prop. comes from the fact that you need to specify what you want to do
+- Introspection is great for when you're unsure of what you want to do
+
+---
+
+# Introspecting the API
+
+---
+
+# Interactions
+
+- Query or Mutation?
+- Types needed
+
+---
+
+# Creating the Query
+
+- You should have g.rishi.cx open right now
+
+---
+
+<CodeSurfer theme={theme}>
+
+```graphql title="Layout of the query"
+query Query {
+
+}
+```
+
+```graphql title="Add types we need"
+query Query {
+  todos {
+
+  }
+}
+```
+
+```graphql title="Add data"
+query Query {
+  todos {
+    data {
+
+    }
+  }
+}
+```
+
+```graphql title="Final layer of introspection"
+query Query {
+  todos {
+    data {
+      id
+    }
+  }
+}
+```
+
+```graphql title="Query done!" 1:7
+query Query {
+  todos {
+    data {
+      id
+    }
+  }
+}
+```
+
+
+```graphql title="Add in posts"
+query Query {
+  todos {
+    data {
+      id
+    }
+  }
+
+  posts {
+    data {
+      id
+    }
+  }
+}
+```
+
+
+```graphql title="Add in titles"
+query Query {
+  todos {
+    data {
+      id
+      title
+    }
+  }
+
+  posts {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Add in comments"
+query Query {
+  todos {
+    data {
+      id
+      title
+    }
+  }
+
+  posts {
+    data {
+      id
+      title
+    }
+  }
+
+  comments {
+    data {
+      id
+      body
+    }
+  }
+}
+```
+
+
+```graphql title="Adding inputs"
+query Query {
+  todos(options:{
+
+  }) {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Add options"
+
+query Query {
+  todos(options:{
+    paginate:{
+      limit:5,
+    }
+  }) {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Finish pagination"
+
+query Query {
+  todos(options:{
+    paginate:{
+      limit:5,
+      page:3
+    }
+  }) {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+
+```graphql title="Add ID"
+query Query {
+  todos(options:{
+    paginate:{
+      limit:5,
+      page:3
+    }
+  }) {
+    data {
+      id
+      title
+    }
+  }
+
+  todo(id:"5") {
+    id
+    title
+  }
+}
+```
+
+```graphql title="Building a Fragment"
+query Query {
+  todos(options:{
+    paginate:{
+      limit:5,
+      page:3
+    }
+  }) {
+    data {
+      id
+      title
+    }
+  }
+
+  todo(id:"5") {
+    id
+    title
+  }
+}
+
+fragment FTodo on Todo {
+  id
+  title
+}
+```
+
+
+```graphql title="Replacing with Fragments"
+query Query {
+  todos(options:{
+    paginate:{
+      limit:5,
+      page:3
+    }
+  }) {
+    data {
+      ...FTodo
+    }
+  }
+
+  todo(id:"5") {
+    ...FTodo
+  }
+}
+
+fragment FTodo on Todo {
+  id
+  title
+}
+```
+
+</CodeSurfer>
