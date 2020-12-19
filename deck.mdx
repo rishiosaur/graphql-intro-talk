@@ -650,3 +650,109 @@ fragment FTodo on Todo {
 ```
 
 </CodeSurfer>
+
+---
+
+# Recap
+
+- What GraphQL consists of
+- What the SDL looks like
+- Queries and Mutations
+- GraphQL Playground
+- Introspection technique
+- Wrote our own!
+
+---
+
+# Questions?
+
+---
+
+## Building a GraphQL API
+
+<Highlight>
+  <h1>Setup</h1>
+</Highlight>
+
+---
+
+
+<CodeSurfer theme={theme}>
+
+```bash
+$ git clone https://github.com/rishiosaur/gql.git 
+$ cd gql 
+$ yarn 
+$ yarn start
+```
+
+</CodeSurfer>
+
+---
+
+# What we'll be building
+
+todos.rishi.cx
+
+---
+
+# Components of a GraphQL Server
+
+- Server-side SDL
+
+- Resolvers
+
+---
+
+
+<CodeSurfer theme={theme}>
+
+```graphql title="Resolvers"
+query Query {
+  todos {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+</CodeSurfer>
+
+---
+
+# What do we want this API to do?
+
+- CRD todos
+- One `Query`
+- Two `Mutations`
+
+---
+
+# Types
+
+- `Query`
+- `Mutation`
+- `Todo`
+
+---
+
+<CodeSurfer theme={theme}>
+
+```graphql title="Resolvers"
+type Query {
+  todos(): [Todo]
+}
+
+type Mutation {
+  createTodo(id:ID!, title:String!): Todo
+  deleteTodo(id:ID!): Boolean!
+}
+```
+
+</CodeSurfer>
+
+---
+
+`IMPLEMENT`
