@@ -159,36 +159,51 @@ export const Highlight = (props) => (
 
 ---
 
-<CodeSurfer theme={theme}>
+<CodeSurfer theme={pres}>
 
-```js title="This is a title" subtitle="and this a subtitle"
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
+```js title="Who am I?"
+// rishi.ts
+export const name = "Rishi Kothari 👋👨‍💻";
+```
 
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
+```js title="Who am I?"
+// rishi.ts
+export const name = "Rishi Kothari 👋👨‍💻";
+export const location = "📚📍 Brampton";
+export const age = 15;
+```
 
-  if (!sit || ut < 1) {
-    return [];
-  }
+```js title="Who am I?"
+// rishi.ts
+export const name = "Rishi Kothari 👋👨‍💻";
+export const location = "📚📍 Brampton";
+export const age = 15;
+export const getLoves = [
+  "Formula One",
+  "Typescript",
+  "Open Source",
+  "GraphQL",
+].sort(() => 0.5 - Math.random())[0];
+```
 
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
+```js title="Who am I?"
+// rishi.ts
+export const name = "Rishi Kothari 👋👨‍💻";
+export const location = "📚📍 Brampton";
+export const age = 15;
+export const getLoves = [
+  "Formula One",
+  "Typescript",
+  "Open Source",
+  "GraphQL",
+].sort(() => 0.5 - Math.random())[0];
+export const socials = {
+  most: "@rishiosaur",
+  web: "rishi.cx",
+};
+```
 
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
+</CodeSurfer>
 
   return aliqua;
 }
