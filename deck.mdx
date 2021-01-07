@@ -6,11 +6,18 @@ import {
 import { github } from "@code-surfer/themes";
 import Code from "mdx-code";
 import { Notes } from "mdx-deck";
+import MonkeyLikesBanana from "./MLB.png";
+import DontHaveBanana from "./DHB.png";
+import ROTTENMAP from "./ROTTENMAP.png";
+import HTTP from "./HTTPDIAGRAM.png";
+import A from "./ANALYSIS.png";
+import GRAPHQL from "./GRAPHQL.png";
+import GA from "./GQLANALYSIS.png";
 
 export const theme = {
   fonts: {
-    body: '"Inter", system-ui, sans-serif',
-    heading: '"Inter", sans-serif',
+    body: '"Kollektif", system-ui, sans-serif',
+    heading: '"Helvetica Neue", sans-serif',
     monospace: "Fira Code,Jetbrains Mono, monospace",
   },
   colors: {
@@ -72,9 +79,9 @@ export const theme = {
 
 export const pres = {
   fonts: {
-    body: '"Inter", system-ui, sans-serif',
-    heading: '"Inter", sans-serif',
-    monospace: "'Inter'",
+    body: '"Helvetica Neue", system-ui, sans-serif',
+    heading: '"Helvetica Neue", sans-serif',
+    monospace: "'Helvetica Neue'",
   },
   colors: {
     text: "#FFF",
@@ -235,11 +242,10 @@ export const socials = {
 
 ## Building our API [30 - 45ish minutes]
 
-- Introduction to TypegraphQL & Apollo
-- Building Queries
-- Building Mutations
+- Asking ourselves questions
+- Resolver architecture
 
-- Putting it all together
+- Implementing with Type-GraphQL + Apollo Server
 
 ---
 
@@ -259,6 +265,53 @@ export const socials = {
 - Define what data you want to grab from the API
 - Have type-safe guarantees for your data
 - High-level constructs
+
+---
+
+# Monkey!
+
+---
+
+<img src={MonkeyLikesBanana} />
+
+---
+
+<img src={DontHaveBanana} />
+
+---
+
+<img src={ROTTENMAP} />
+
+---
+
+<img src={HTTP} />
+
+---
+
+<img src={A} />
+
+---
+
+<img src={GRAPHQL} />
+
+---
+
+<img src={GA} />
+
+---
+
+# REST
+
+- Individually fetch endpoints
+-
+
+---
+
+# GraphQL
+
+- Round-trip fetching
+- On-the-fly type validation (rotten bananas) & customization
+- Less overall trips; less room to go wrong
 
 ---
 
@@ -309,6 +362,15 @@ query Query {
 }
 ```
 
+```graphql title="Types: Almost like structs!"
+type Todo {
+  id: ID
+  title: String
+  completed: Boolean
+  user: User
+}
+```
+
 </CodeSurfer>
 
 ---
@@ -328,12 +390,6 @@ query Query {
 - A specification made by the GQL consortium to serve up GraphQL APIs
 - What you implement to make a GraphQL
 - Defines how GraphQL is parsed & queries resolved
-
----
-
-# You as a 5-year-old
-
-`<Toy analogy/>`
 
 ---
 
@@ -427,46 +483,6 @@ const fetchSpaceX = fetch(
 
 ---
 
-# Demo time!
-
----
-
-<Code>
-
-```js
-require("isomorphic-unfetch")(
-  `https://api.spacex.land/graphql`,
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        {
-  capsulesUpcoming {
-    status
-    id
-    type
-  }
-
-  capsules {
-    status
-    id
-    type
-  }
-
-}
-      `,
-    }),
-  }
-)
-  .then((resp) => resp.json())
-  .then(console.log);
-```
-
-</Code>
-
----
-
 ## Using the GraphQL SDL
 
 <Highlight>
@@ -479,14 +495,14 @@ require("isomorphic-unfetch")(
 
 ---
 
+# Introspection?
+
+---
+
 # What do you want?
 
 - GraphQL's value prop. comes from the fact that you need to specify what you want to do
 - Introspection is great for when you're unsure of what you want to do
-
----
-
-# Introspecting the API
 
 ---
 
@@ -506,13 +522,13 @@ require("isomorphic-unfetch")(
 <CodeSurfer theme={theme}>
 
 ```graphql title="Layout of the query"
-query Query {
+query Todos {
 
 }
 ```
 
 ```graphql title="Add types we need"
-query Query {
+query Todos {
   todos {
 
   }
@@ -520,7 +536,7 @@ query Query {
 ```
 
 ```graphql title="Add data"
-query Query {
+query Todos {
   todos {
     data {
 
@@ -530,7 +546,7 @@ query Query {
 ```
 
 ```graphql title="Final layer of introspection"
-query Query {
+query Todos {
   todos {
     data {
       id
@@ -540,7 +556,7 @@ query Query {
 ```
 
 ```graphql title="Query done!" 1:7
-query Query {
+query Todos {
   todos {
     data {
       id
@@ -548,10 +564,9 @@ query Query {
   }
 }
 ```
-
 
 ```graphql title="Add in posts"
-query Query {
+query Todos {
   todos {
     data {
       id
@@ -565,10 +580,9 @@ query Query {
   }
 }
 ```
-
 
 ```graphql title="Add in titles"
-query Query {
+query Todos {
   todos {
     data {
       id
@@ -584,38 +598,10 @@ query Query {
   }
 }
 ```
-
-```graphql title="Add in comments"
-query Query {
-  todos {
-    data {
-      id
-      title
-    }
-  }
-
-  posts {
-    data {
-      id
-      title
-    }
-  }
-
-  comments {
-    data {
-      id
-      body
-    }
-  }
-}
-```
-
 
 ```graphql title="Adding inputs"
-query Query {
-  todos(options:{
-
-  }) {
+query Todos {
+  todos(options: {}) {
     data {
       id
       title
@@ -625,13 +611,8 @@ query Query {
 ```
 
 ```graphql title="Add options"
-
-query Query {
-  todos(options:{
-    paginate:{
-      limit:5,
-    }
-  }) {
+query Todos {
+  todos(options: { paginate: { limit: 5 } }) {
     data {
       id
       title
@@ -641,14 +622,8 @@ query Query {
 ```
 
 ```graphql title="Finish pagination"
-
-query Query {
-  todos(options:{
-    paginate:{
-      limit:5,
-      page:3
-    }
-  }) {
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
     data {
       id
       title
@@ -657,22 +632,16 @@ query Query {
 }
 ```
 
-
 ```graphql title="Add ID"
-query Query {
-  todos(options:{
-    paginate:{
-      limit:5,
-      page:3
-    }
-  }) {
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
     data {
       id
       title
     }
   }
 
-  todo(id:"5") {
+  todo(id: "5") {
     id
     title
   }
@@ -680,20 +649,15 @@ query Query {
 ```
 
 ```graphql title="Building a Fragment"
-query Query {
-  todos(options:{
-    paginate:{
-      limit:5,
-      page:3
-    }
-  }) {
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
     data {
       id
       title
     }
   }
 
-  todo(id:"5") {
+  todo(id: "5") {
     id
     title
   }
@@ -705,21 +669,15 @@ fragment FTodo on Todo {
 }
 ```
 
-
 ```graphql title="Replacing with Fragments"
-query Query {
-  todos(options:{
-    paginate:{
-      limit:5,
-      page:3
-    }
-  }) {
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
     data {
       ...FTodo
     }
   }
 
-  todo(id:"5") {
+  todo(id: "5") {
     ...FTodo
   }
 }
@@ -749,21 +707,92 @@ fragment FTodo on Todo {
 
 ---
 
-## Building a GraphQL API
-
-<Highlight>
-  <h1>Setup</h1>
-</Highlight>
+# Building a GraphQL API
 
 ---
 
+# What do we want this to do?
+
+The big question of GraphQL, yet again.
+
+---
+
+# Todos!
+
+- CRU API
+- 2 `Query`: Get all
+
+- 2 Update `Mutation`s; Toggling & Complete updates
+
+- 1 Create `Mutation`s; Create a todo!
+
+---
+
+## Demo
+
+`<LINK>`
+
+---
+
+## Architecture
+
+---
 
 <CodeSurfer theme={theme}>
 
+```graphql title="Complex query"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
+    data {
+      ...FTodo
+    }
+  }
+
+  todo(id: "5") {
+    ...FTodo
+  }
+}
+
+fragment FTodo on Todo {
+  id
+  title
+}
+```
+
+```graphql title="Desugaring"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
+    data {
+      id
+      title
+    }
+  }
+
+  todo(id: "5") {
+  id
+  title
+  }
+}
+```
+
+```graphql title="Types: Almost like structs!"
+type Todo {
+  id: ID
+  title: String
+  completed: Boolean
+  user: User
+}
+```
+
+</CodeSurfer>
+
+<!-- 
+<CodeSurfer theme={theme}>
+
 ```bash
-$ git clone https://github.com/rishiosaur/gql.git 
-$ cd gql 
-$ yarn 
+$ git clone https://github.com/rishiosaur/gql.git
+$ cd gql
+$ yarn
 $ yarn start
 ```
 
@@ -784,7 +813,6 @@ todos.rishi.cx
 - Resolvers
 
 ---
-
 
 <CodeSurfer theme={theme}>
 
@@ -836,4 +864,4 @@ type Mutation {
 
 ---
 
-`IMPLEMENT`
+`IMPLEMENT` -->
