@@ -303,9 +303,8 @@ export const socials = {
 # REST
 
 - Individually fetch endpoints
--
-
----
+- Client-side validation (no banana checking)
+- Lots of useless runs
 
 # GraphQL
 
@@ -769,22 +768,35 @@ query Todos {
   }
 
   todo(id: "5") {
-  id
-  title
+    id
+    title
   }
 }
 ```
 
-```graphql title="Types: Almost like structs!"
-type Todo {
-  id: ID
-  title: String
-  completed: Boolean
-  user: User
+```graphql title="Identify Scalar types"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) { // TYPE
+    data { // TYPE
+      id // SCALAR
+      title // SCALAR
+    }
+  }
+
+  todo(id: "5") { // TYPE
+    id // SCALAR
+    title // SCALAR
+  }
 }
 ```
 
 </CodeSurfer>
+
+---
+
+# It's time to build.
+
+Let's put your knowledge to the test!
 
 <!-- 
 <CodeSurfer theme={theme}>
