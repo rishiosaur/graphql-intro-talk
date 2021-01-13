@@ -1,0 +1,172 @@
+
+
+<!-- {/* <CodeSurfer theme={theme}>
+
+```graphql title="Layout of the query"
+query Todos {
+
+}
+```
+
+```graphql title="Add types we need"
+query Todos {
+  todos {
+
+  }
+}
+```
+
+```graphql title="Add data"
+query Todos {
+  todos {
+    data {
+
+    }
+  }
+}
+```
+
+```graphql title="Final layer of introspection"
+query Todos {
+  todos {
+    data {
+      id
+    }
+  }
+}
+```
+
+```graphql title="Query done!" 1:7
+query Todos {
+  todos {
+    data {
+      id
+    }
+  }
+}
+```
+
+```graphql title="Add in posts"
+query Todos {
+  todos {
+    data {
+      id
+    }
+  }
+
+  posts {
+    data {
+      id
+    }
+  }
+}
+```
+
+```graphql title="Add in titles"
+query Todos {
+  todos {
+    data {
+      id
+      title
+    }
+  }
+
+  posts {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Adding inputs"
+query Todos {
+  todos(options: {}) {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Add options"
+query Todos {
+  todos(options: { paginate: { limit: 5 } }) {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Finish pagination"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
+    data {
+      id
+      title
+    }
+  }
+}
+```
+
+```graphql title="Add ID"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
+    data {
+      id
+      title
+    }
+  }
+
+  todo(id: "5") {
+    id
+    title
+  }
+}
+```
+
+```graphql title="Building a Fragment"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
+    data {
+      id
+      title
+    }
+  }
+
+  todo(id: "5") {
+    id
+    title
+  }
+}
+
+fragment FTodo on Todo {
+  id
+  title
+}
+```
+
+```graphql title="Replacing with Fragments"
+query Todos {
+  todos(options: { paginate: { limit: 5, page: 3 } }) {
+    data {
+      ...FTodo
+    }
+  }
+
+  todo(id: "5") {
+    ...FTodo
+  }
+}
+
+fragment FTodo on Todo {
+  id
+  title
+}
+```
+
+</CodeSurfer> */} -->

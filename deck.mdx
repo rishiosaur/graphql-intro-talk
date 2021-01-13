@@ -222,15 +222,15 @@ export const socials = {
 
 ## Introduction [15 minutes]
 
-- What is GraphQL?
+- A new paradigm of data fetching.
 
-- You as a 5-year-old.
+- Monkeys!
 
 - Why use it?
 
 ---
 
-## Using the GraphQL SDL [30 minutes]
+## Building queries [30 minutes]
 
 - General Format
 - Queries & Mutations
@@ -314,7 +314,7 @@ export const socials = {
 
 ---
 
-# GraphQL SDL (Schema Design Language)
+# GraphQL SDL
 
 # Server Specification
 
@@ -482,6 +482,15 @@ const fetchSpaceX = fetch(
 
 ---
 
+# Recap
+
+- Problems GraphQL solves
+- Why it's so much better than REST
+- A little bit of the underlying architectur
+- Types!
+
+---
+
 ## Using the GraphQL SDL
 
 <Highlight>
@@ -491,6 +500,8 @@ const fetchSpaceX = fetch(
 ---
 
 # g.rishi.cx
+
+A minimal 'hello world' API.
 
 ---
 
@@ -515,179 +526,6 @@ const fetchSpaceX = fetch(
 # Creating the Query
 
 - You should have g.rishi.cx open right now
-
----
-
-<CodeSurfer theme={theme}>
-
-```graphql title="Layout of the query"
-query Todos {
-
-}
-```
-
-```graphql title="Add types we need"
-query Todos {
-  todos {
-
-  }
-}
-```
-
-```graphql title="Add data"
-query Todos {
-  todos {
-    data {
-
-    }
-  }
-}
-```
-
-```graphql title="Final layer of introspection"
-query Todos {
-  todos {
-    data {
-      id
-    }
-  }
-}
-```
-
-```graphql title="Query done!" 1:7
-query Todos {
-  todos {
-    data {
-      id
-    }
-  }
-}
-```
-
-```graphql title="Add in posts"
-query Todos {
-  todos {
-    data {
-      id
-    }
-  }
-
-  posts {
-    data {
-      id
-    }
-  }
-}
-```
-
-```graphql title="Add in titles"
-query Todos {
-  todos {
-    data {
-      id
-      title
-    }
-  }
-
-  posts {
-    data {
-      id
-      title
-    }
-  }
-}
-```
-
-```graphql title="Adding inputs"
-query Todos {
-  todos(options: {}) {
-    data {
-      id
-      title
-    }
-  }
-}
-```
-
-```graphql title="Add options"
-query Todos {
-  todos(options: { paginate: { limit: 5 } }) {
-    data {
-      id
-      title
-    }
-  }
-}
-```
-
-```graphql title="Finish pagination"
-query Todos {
-  todos(options: { paginate: { limit: 5, page: 3 } }) {
-    data {
-      id
-      title
-    }
-  }
-}
-```
-
-```graphql title="Add ID"
-query Todos {
-  todos(options: { paginate: { limit: 5, page: 3 } }) {
-    data {
-      id
-      title
-    }
-  }
-
-  todo(id: "5") {
-    id
-    title
-  }
-}
-```
-
-```graphql title="Building a Fragment"
-query Todos {
-  todos(options: { paginate: { limit: 5, page: 3 } }) {
-    data {
-      id
-      title
-    }
-  }
-
-  todo(id: "5") {
-    id
-    title
-  }
-}
-
-fragment FTodo on Todo {
-  id
-  title
-}
-```
-
-```graphql title="Replacing with Fragments"
-query Todos {
-  todos(options: { paginate: { limit: 5, page: 3 } }) {
-    data {
-      ...FTodo
-    }
-  }
-
-  todo(id: "5") {
-    ...FTodo
-  }
-}
-
-fragment FTodo on Todo {
-  id
-  title
-}
-```
-
-</CodeSurfer>
 
 ---
 
@@ -728,8 +566,6 @@ The big question of GraphQL, yet again.
 ---
 
 ## Demo
-
-`<LINK>`
 
 ---
 
@@ -797,6 +633,10 @@ query Todos {
 # It's time to build.
 
 Let's put your knowledge to the test!
+
+---
+
+# Thank you!
 
 <!-- 
 <CodeSurfer theme={theme}>
